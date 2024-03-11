@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-Time Temperature Monitoring 🌡️</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h1>Real-Time Temperature Monitoring 🌡️</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Device ID</th>
+        <th>Average Temperature</th>
+      </tr>
+    </thead>
+    <tbody id="data-table">
+        <!-- Rows will be added here via JavaScript -->
+    </tbody>
+  </table>
+
+  <script>
+    const evtSource = new EventSource("/events");
+    evtSource.onmessage = function(event) {
+      const devices = JSON.parse(event.data);
+      const table = document.getElementById("data-table");
+
+      devices.forEach((device) => {
+        let row = document.getElementById(device.device_key);
+
+        if (!row) {
+          row = table.insertRow();
+          row.setAttribute('id', device.device_key);
+          let cell1 = row.insertCell(0);
+          let cell2 = row.insertCell(1);
+          cell1.innerHTML = device.device_key;
+          cell2.innerHTML = device.avg_temperature.toFixed(2);
+        } else {
+          row.cells[1].innerHTML = device.avg_temperature.toFixed(2);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
