@@ -10,6 +10,8 @@ Designed as part of a blog series, this repository aims to assist individuals cu
 
 IoTDataPipeline is a compact yet insightful project that showcases real-time data ingestion, processing, and visualization, leveraging a stack of well-integrated technologies. It's a perfect starting point for those looking to understand the nuts and bolts of real-time data pipelines in the context of IoT (Internet of Things).
 
+![architecture diagram](./architecture.png)
+
 ### Components
 
 The project spins up several services using Docker Compose:
